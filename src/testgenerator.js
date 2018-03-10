@@ -44,9 +44,10 @@ function generateTestCases(filepath, functionConstraints) {
         // Get constraints and map to values
         let constraints = functionConstraints[funcName].constraints;
         let values =  _.mapValues(constraints, (arr) => _.map(arr, c => c.value));
+        console.log(values);
 
         // Generate possible combinations of arguments
-        let argCombinations = product(..._.map(params, p => !_.isEmpty(values[p]) ? values[p] : ["''"]));
+        let argCombinations = product(..._.map(params, p => !_.isEmpty(values[p]) ? values[p] : ["''", "'x'"]));
 
         // Handle global constraints...
         // Whether or not any constraint is of type fileWithContent of fileExists.

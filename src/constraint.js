@@ -78,7 +78,24 @@ function constraints(filePath) {
             traverse(node, function(child) {
 
                 // Handle equivalence expression
-                if(_.get(child, 'type') === 'BinaryExpression' && _.includes(['!=', '!==', '==', '==='], _.get(child, 'operator'))) {
+                // if( child.type === "CallExpression" && child.callee.property && child.callee.property.name === "indexOf" ) {
+                //             console.log(params);
+                // }
+                if(_.get(child, 'type') === 'BinaryExpression' && _.includes(['!=', '!==', '==', '===', '<', '>'], _.get(child, 'operator'))) {
+                    if( _.get(child, 'left.type') === "CallExpression" && _.get(child, 'left.callee.property') && _.get(child, 'left.callee.property.name') === "indexOf" ) {
+                            let ident = child.left.callee.object.name;
+                            let expression = buf.substring(child.range[0], child.range[1]);
+                            let constraints = functionConstraints[funcName].constraints[ident];
+                            constraints.push(new Constraint({
+                                ident: ident,
+                                value: child.left.arguments[0].raw,
+                                funcName: funcName,
+                                kind: "string",
+                                operator : child.operator,
+                                expression: expression
+                            }));
+
+                    }
                     if(_.get(child, 'left.type') === 'Identifier') {
 
                         // Get identifier
@@ -87,17 +104,59 @@ function constraints(filePath) {
                         // Get expression from original source code:
                         let expression = buf.substring(child.range[0], child.range[1]);
                         let rightHand = buf.substring(child.right.range[0], child.right.range[1]);
+                        console.log(rightHand);
 
                         // Test to see if right hand is a string
                         let match = rightHand.match(/^['"](.*)['"]$/);
+                        if(child.left.name == "area"){
+                            //console.log(params);
+                            ident = params[0];
+                            let phno = "'"+rightHand.substring(1, rightHand.length-1)+"xxxxxxx'";
+                            let constraints = functionConstraints[funcName].constraints[ident];
+                            constraints.push(new Constraint({
+                                ident: ident,
+                                value: phno,
+                                funcName: funcName,
+                                kind: "integer",
+                                operator : child.operator,
+                                expression: expression
+                            }));
+                            constraints.push(new Constraint({
+                                ident: ident,
+                                value: "''",
+                                funcName: funcName,
+                                kind: "integer",
+                                operator : child.operator,
+                                expression: expression
+                            }));
+                        }
+
+
 
                         if (_.includes(params, _.get(child, 'left.name'))) {
 
                             // Push a new constraints
+                            console.log(typeof rightHand);
                             let constraints = functionConstraints[funcName].constraints[ident];
                             constraints.push(new Constraint({
                                 ident: child.left.name,
                                 value: rightHand,
+                                funcName: funcName,
+                                kind: "integer",
+                                operator : child.operator,
+                                expression: expression
+                            }));
+                            constraints.push(new Constraint({
+                                ident: child.left.name,
+                                value: rightHand-1+"",
+                                funcName: funcName,
+                                kind: "integer",
+                                operator : child.operator,
+                                expression: expression
+                            }));
+                            constraints.push(new Constraint({
+                                ident: child.left.name,
+                                value: +rightHand+1+"",
                                 funcName: funcName,
                                 kind: "integer",
                                 operator : child.operator,
@@ -111,6 +170,7 @@ function constraints(filePath) {
                                 operator : child.operator,
                                 expression: expression
                             }));
+
                         }
                     }
                 }

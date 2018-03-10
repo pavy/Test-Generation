@@ -102,4 +102,3 @@ exports.format = format;
 exports.inc = inc;
 exports.weird = weird;
 exports.blackListNumber = blackListNumber;
-
