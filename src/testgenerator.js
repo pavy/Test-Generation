@@ -18,7 +18,7 @@ const mockFileLibrary = {
     fileWithContent: {
         pathContent: {
             file1: "new Buffer('abc')",
-            someDir: 'mock.directory()'
+            file2: "''"
         }
     }
 };
@@ -44,7 +44,7 @@ function generateTestCases(filepath, functionConstraints) {
         // Get constraints and map to values
         let constraints = functionConstraints[funcName].constraints;
         let values =  _.mapValues(constraints, (arr) => _.map(arr, c => c.value));
-        console.log(values);
+        //console.log(values);
 
         // Generate possible combinations of arguments
         let argCombinations = product(..._.map(params, p => !_.isEmpty(values[p]) ? values[p] : ["''", "'x'"]));

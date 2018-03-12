@@ -593,12 +593,12 @@ try { subject.weird(NaN, NaN, NaN, NaN); } catch (e) {}
 try { subject.weird(NaN, NaN, NaN, NaN); } catch (e) {} 
 try { subject.weird(NaN, NaN, NaN, 'NEQ - strict'); } catch (e) {} 
 try{
-	mock({emptyDir:mock.directory(),nonEmptyDir:mock.directory({ items: { file: mock.file() } }),file:mock.file(),pathContent:{file1:new Buffer('abc'),someDir:mock.directory()}});
+	mock({emptyDir:mock.directory(),nonEmptyDir:mock.directory({ items: { file: mock.file() } }),file:mock.file(),pathContent:{file1:new Buffer('abc'),file2:''}});
 		subject.fileTest('', 'pathContent/file1');
 	mock.restore();
 } catch(e) {}
 try{
-	mock({pathContent:{file1:new Buffer('abc'),someDir:mock.directory()}});
+	mock({pathContent:{file1:new Buffer('abc'),file2:''}});
 		subject.fileTest('', 'pathContent/file1');
 	mock.restore();
 } catch(e) {}
@@ -613,63 +613,63 @@ try{
 	mock.restore();
 } catch(e) {}
 try{
-	mock({emptyDir:mock.directory(),nonEmptyDir:mock.directory({ items: { file: mock.file() } }),file:mock.file(),pathContent:{file1:new Buffer('abc'),someDir:mock.directory()}});
-		subject.fileTest('', 'pathContent/someDir');
+	mock({emptyDir:mock.directory(),nonEmptyDir:mock.directory({ items: { file: mock.file() } }),file:mock.file(),pathContent:{file1:new Buffer('abc'),file2:''}});
+		subject.fileTest('', 'pathContent/file2');
 	mock.restore();
 } catch(e) {}
 try{
-	mock({pathContent:{file1:new Buffer('abc'),someDir:mock.directory()}});
-		subject.fileTest('', 'pathContent/someDir');
-	mock.restore();
-} catch(e) {}
-try{
-	mock({emptyDir:mock.directory(),nonEmptyDir:mock.directory({ items: { file: mock.file() } }),file:mock.file()});
-		subject.fileTest('', 'pathContent/someDir');
-	mock.restore();
-} catch(e) {}
-try{
-	mock({});
-		subject.fileTest('', 'pathContent/someDir');
-	mock.restore();
-} catch(e) {}
-try{
-	mock({emptyDir:mock.directory(),nonEmptyDir:mock.directory({ items: { file: mock.file() } }),file:mock.file(),pathContent:{file1:new Buffer('abc'),someDir:mock.directory()}});
-		subject.fileTest('x', 'pathContent/file1');
-	mock.restore();
-} catch(e) {}
-try{
-	mock({pathContent:{file1:new Buffer('abc'),someDir:mock.directory()}});
-		subject.fileTest('x', 'pathContent/file1');
+	mock({pathContent:{file1:new Buffer('abc'),file2:''}});
+		subject.fileTest('', 'pathContent/file2');
 	mock.restore();
 } catch(e) {}
 try{
 	mock({emptyDir:mock.directory(),nonEmptyDir:mock.directory({ items: { file: mock.file() } }),file:mock.file()});
-		subject.fileTest('x', 'pathContent/file1');
+		subject.fileTest('', 'pathContent/file2');
 	mock.restore();
 } catch(e) {}
 try{
 	mock({});
+		subject.fileTest('', 'pathContent/file2');
+	mock.restore();
+} catch(e) {}
+try{
+	mock({emptyDir:mock.directory(),nonEmptyDir:mock.directory({ items: { file: mock.file() } }),file:mock.file(),pathContent:{file1:new Buffer('abc'),file2:''}});
 		subject.fileTest('x', 'pathContent/file1');
 	mock.restore();
 } catch(e) {}
 try{
-	mock({emptyDir:mock.directory(),nonEmptyDir:mock.directory({ items: { file: mock.file() } }),file:mock.file(),pathContent:{file1:new Buffer('abc'),someDir:mock.directory()}});
-		subject.fileTest('x', 'pathContent/someDir');
-	mock.restore();
-} catch(e) {}
-try{
-	mock({pathContent:{file1:new Buffer('abc'),someDir:mock.directory()}});
-		subject.fileTest('x', 'pathContent/someDir');
+	mock({pathContent:{file1:new Buffer('abc'),file2:''}});
+		subject.fileTest('x', 'pathContent/file1');
 	mock.restore();
 } catch(e) {}
 try{
 	mock({emptyDir:mock.directory(),nonEmptyDir:mock.directory({ items: { file: mock.file() } }),file:mock.file()});
-		subject.fileTest('x', 'pathContent/someDir');
+		subject.fileTest('x', 'pathContent/file1');
 	mock.restore();
 } catch(e) {}
 try{
 	mock({});
-		subject.fileTest('x', 'pathContent/someDir');
+		subject.fileTest('x', 'pathContent/file1');
+	mock.restore();
+} catch(e) {}
+try{
+	mock({emptyDir:mock.directory(),nonEmptyDir:mock.directory({ items: { file: mock.file() } }),file:mock.file(),pathContent:{file1:new Buffer('abc'),file2:''}});
+		subject.fileTest('x', 'pathContent/file2');
+	mock.restore();
+} catch(e) {}
+try{
+	mock({pathContent:{file1:new Buffer('abc'),file2:''}});
+		subject.fileTest('x', 'pathContent/file2');
+	mock.restore();
+} catch(e) {}
+try{
+	mock({emptyDir:mock.directory(),nonEmptyDir:mock.directory({ items: { file: mock.file() } }),file:mock.file()});
+		subject.fileTest('x', 'pathContent/file2');
+	mock.restore();
+} catch(e) {}
+try{
+	mock({});
+		subject.fileTest('x', 'pathContent/file2');
 	mock.restore();
 } catch(e) {}
 try { subject.normalize(''); } catch (e) {} 

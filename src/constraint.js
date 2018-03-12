@@ -104,7 +104,7 @@ function constraints(filePath) {
                         // Get expression from original source code:
                         let expression = buf.substring(child.range[0], child.range[1]);
                         let rightHand = buf.substring(child.right.range[0], child.right.range[1]);
-                        console.log(rightHand);
+                        //console.log(rightHand);
 
                         // Test to see if right hand is a string
                         let match = rightHand.match(/^['"](.*)['"]$/);
@@ -136,7 +136,7 @@ function constraints(filePath) {
                         if (_.includes(params, _.get(child, 'left.name'))) {
 
                             // Push a new constraints
-                            console.log(typeof rightHand);
+                            //console.log(typeof rightHand);
                             let constraints = functionConstraints[funcName].constraints[ident];
                             constraints.push(new Constraint({
                                 ident: child.left.name,
@@ -198,12 +198,13 @@ function constraints(filePath) {
                             }));
                             functionConstraints[funcName].constraints[ident].push(new Constraint({
                                 ident: params[p],
-                                value:  "'pathContent/someDir'",
+                                value:  "'pathContent/file2'",
                                 funcName: funcName,
                                 kind: "fileWithContent",
                                 operator : child.operator,
                                 expression: expression
                             }));
+
                         }
                     }
                 }
